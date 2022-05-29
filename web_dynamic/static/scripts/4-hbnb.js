@@ -30,7 +30,7 @@ $('.filters_item .checkbox').on('change', (e) => {
 /* Retrieve API state
 /*========================================*/
 const apiStatus = $('div#api_status');
-$.ajax('http://172.17.45.196:5001/api/v1/status/')
+$.ajax('http://127.0.0.1:5001/api/v1/status/')
   .then(({ status }) =>  status === 'OK' && apiStatus.addClass('available'))
   .catch(() => apiStatus.removeClass('available'));
 
@@ -71,14 +71,13 @@ function place(props) {
 /**
  * Generate a list of elements (nodes of the DOM)
  */
-async function Places() {
-
-  const placesList = await $.ajax('http://172.17.45.196:5001/api/v1/places_search/',{
+async function Places(data={}) {
+  const placesList = await $.ajax('http://127.0.0.1:5001/api/v1/places_search/',{
     type: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: JSON.stringify({}),
+    data: JSON.stringify(data),
   })
 
   elmList = placesList.map(obj => place(obj))
@@ -89,10 +88,20 @@ async function Places() {
  * @param (cb) component - Callback that generate a list of element to insert
  * @param (node) root - element in the DOM
  */
-async function render(component, root) {
-  const elm = await component();
-  console.log(root);
-  elm.forEach(e => root.append(e));
+async function render(component, filters={}, root) {
+  const elms = await component(filters);
+  // console.log(root);
+  root.empty()
+  console.log("elms: " + elms.length);
+  elms.forEach(e => root.append(e));
 }
 
-render(Places, $('.places .places_main'))
+render(Places, filters={},$('.places .places_main'))
+
+/*================================*/
+/* Implementation our first filter
+/*================================*/
+$('#filters-btn').on('click', () => {
+  filterBy = {amenities: Object.keys(amenities)};
+  render(Places, filterBy, $('.places .places_main'));
+})
