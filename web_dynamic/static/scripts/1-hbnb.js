@@ -7,12 +7,12 @@ function getPoints(text, limit) {
 }
 
 $('.filters_item .checkbox').on('change', (e) => {
-  const elm = e.target;
+  const checkbox = e.target;
   const elmToWrite = $('#amenities_checked-filters');
 
-  elm.checked === true
-    ? amenities[$(elm).data('id')] = $(elm).data('name')
-    : delete amenities[$(elm).data('id')];
+  checkbox.checked === true
+    ? amenities[$(checkbox).data('id')] = $(checkbox).data('name')
+    : delete amenities[$(checkbox).data('id')];
 
   const amenities_ids = Object.values(amenities)
   const text = amenities_ids.join(', ');
