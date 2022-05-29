@@ -124,7 +124,6 @@ async function render(component, filters={}, root) {
   const elms = await component(filters);
   // console.log(root);
   root.empty()
-  console.log("#elms to render: " + elms.length);
   elms.forEach(e => root.append(e));
 }
 
@@ -139,6 +138,5 @@ $('#filters-btn').on('click', () => {
     cities: Object.keys(cities),
     amenities: Object.keys(amenities)
   };
-  // console.table(filterBy);
   render(Places, filterBy, $('.places .places_main'));
 })
