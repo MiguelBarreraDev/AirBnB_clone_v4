@@ -34,6 +34,7 @@
 	display: flex;
 	flex: .5;
 	height: 100%;
+	max-width: 486.5px;
 }
 
 .filters .filters_main > .filters_item {
@@ -59,6 +60,10 @@
 }
 
 .filters .filters_main h4 {
+	display: inline-block;
+	overflow: hidden;
+	width: fit-content;
+	white-space: nowrap;
 	font-weight: 400;
 	font-size: 14px;
 }
@@ -100,4 +105,7 @@
 /* Show on hover */
 .filters .filters_item:hover > ul.popover {
 	display: block;
+}
+.filters .filters_item:hover > ul.popover .checkbox {
+	margin-right: 10px;
 }
